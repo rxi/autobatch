@@ -197,7 +197,7 @@ mt.renderTo = function(self, fn)
   autobatch.setCanvas( unpack(old) )
 end
 
-mt.getPixel = wrap(mt.getPixel)
+mt.newImageData = wrap(mt.newImageData)
 
 
 return autobatch
