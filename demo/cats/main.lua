@@ -38,6 +38,7 @@ function Cat.new()
   self.flip = math.random() < .5
   self.animSpeed = .8 + math.random() * .3
   self.moveTimer = 0
+  self.elapsed = 0
   return self
 end
 
@@ -47,6 +48,8 @@ function Cat:update(dt)
   local w, h = love.graphics.getDimensions()
   self.x = (self.x + self.vx * dt) % w
   self.y = (self.y + self.vy * dt) % h
+  -- Update elapsed time
+  self.elapsed = self.elapsed + dt
   -- Update move timer -- if we hit zero then change or zero velocity
   self.moveTimer = self.moveTimer - dt
   if self.moveTimer < 0 then
@@ -64,7 +67,7 @@ end
 
 function Cat:draw()
   -- Get current animation frame
-  local e = love.timer.getTime() * self.animSpeed
+  local e = self.elapsed * self.animSpeed
   local frameidx = 1 + self.cat * 8 + math.floor(e * 8 % 4)
   if self.vx ~= 0 or self.vy ~= 0 then
     frameidx = frameidx + 4
