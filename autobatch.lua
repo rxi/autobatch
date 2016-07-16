@@ -186,7 +186,7 @@ end
 -- Override love.graphics
 love.graphics = autobatch
 
--- Override Canvas:renderTo() and Canvas:getPixel()
+-- Override Canvas functions
 local mt = getmetatable( love_graphics.newCanvas(1, 1) )
 
 local fn = mt.renderTo
