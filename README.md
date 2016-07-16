@@ -11,7 +11,8 @@ project, and the following line put at the top of your `main.lua` file:
 ```lua
 require "autobatch"
 ```
-The project overrides `love.graphics` and should work automatically without any additional changes to your code.
+The project overrides `love.graphics` and should work automatically without any
+additional changes to your code.
 
 
 ## License
