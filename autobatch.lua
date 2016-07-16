@@ -21,8 +21,8 @@ autobatch.image = nil
 
 
 local function switchActiveImage(img)
-  -- Draw and reset old image's spritebatch if we have one; if not we set love's
-  -- color state as the spritebatch's color state will be used instead
+  -- Draw and reset old image's spritebatch if we have one; if not we reset
+  -- love's color state as the spritebatch's color state will be used instead
   if autobatch.image then
     local b = autobatch.batches[autobatch.image]
     love_graphics.draw(b.sb)
