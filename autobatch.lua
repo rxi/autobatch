@@ -186,7 +186,7 @@ end
 -- Override love.graphics
 love.graphics = autobatch
 
--- Override Canvas functions
+-- Wrap Canvas functions
 local mt = getmetatable( love_graphics.newCanvas(1, 1) )
 
 local fn = mt.renderTo
@@ -198,6 +198,14 @@ mt.renderTo = function(self, fn)
 end
 
 mt.newImageData = wrap(mt.newImageData)
+
+-- Wrap Shader functions
+local mt = getmetatable( love_graphics.newShader([[
+  vec4 effect(vec4 a, Image b, vec2 c, vec2 d) { return a; }
+]]) )
+
+mt.send = wrap(mt.send)
+mt.sendColor = wrap(mt.sendColor)
 
 
 return autobatch
