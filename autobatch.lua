@@ -57,31 +57,31 @@ end
 
 
 function autobatch.draw(image, ...)
-  -- Only Textures (Image or Canvas) can be batched -- if the image is neither
-  -- of these then we draw normally instead
-  if not image:typeOf("Texture") then
-    return flushAndDraw(image, ...)
-  end
-  -- Check if the image already has a batch -- if it doesn't we check to see if
-  -- it's the pending image, and whether it's reached the draw count threshold;
-  -- if so we can switch to it as the active image and create a batch for it,
-  -- otherwise we just increment the count and draw it normally
-  if not autobatch.batches[image] then
-    if image == autobatch.pending.image then
-      autobatch.pending.draws = autobatch.pending.draws + 1
-      if autobatch.pending.draws < autobatch.threshold then
+  if image ~= autobatch.image then
+    if not autobatch.batches[image] then
+      -- Only Textures (Image or Canvas) can be batched -- if the image is
+      -- neither of these then we draw normally instead
+      if not image:typeOf("Texture") then
         return flushAndDraw(image, ...)
       end
-    else
-      autobatch.pending.image = image
-      autobatch.pending.draws = 1
-      return flushAndDraw(image, ...)
+      -- Check to see if it's the pending image, and whether it's reached the
+      -- draw count threshold; if so we can switch to it as the active image and
+      -- create a batch for it, otherwise we just increment the count and draw
+      -- it normally
+      if image == autobatch.pending.image then
+        autobatch.pending.draws = autobatch.pending.draws + 1
+        if autobatch.pending.draws < autobatch.threshold then
+          return flushAndDraw(image, ...)
+        end
+      else
+        autobatch.pending.image = image
+        autobatch.pending.draws = 1
+        return flushAndDraw(image, ...)
+      end
     end
-  end
-  -- Reset pending image
-  autobatch.pending.image = nil
-  -- Switch active image if this isn't it
-  if image ~= autobatch.image then
+    -- Reset pending image
+    autobatch.pending.image = nil
+    -- Switch active image
     switchActiveImage(image)
   end
   -- Get active batch
