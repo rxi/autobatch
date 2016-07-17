@@ -99,6 +99,10 @@ end
 
 function autobatch.setColor(r, g, b, a)
   local t = autobatch.color
+  -- Unpack color if it's a table
+  if type(r) == "table" then
+    r, g, b, a = unpack(r)
+  end
   -- Exit early if color isn't different to the current color
   if t[1] == r and t[2] == g and t[3] == b and t[4] == a then
     return
