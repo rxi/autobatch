@@ -7,7 +7,7 @@
 -- under the terms of the MIT license. See LICENSE for details.
 --
 
-local autobatch = { _version = "0.1.0" }
+local autobatch = { _version = "0.1.1" }
 setmetatable(autobatch, { __index = love.graphics })
 
 -- Use local reference to love.graphics as we overwrite it later
