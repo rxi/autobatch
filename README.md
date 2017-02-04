@@ -1,4 +1,6 @@
 # autobatch
+![](https://cloud.githubusercontent.com/assets/3920290/22617987/7d6bf71e-eac9-11e6-98ad-449224a8b7c0.gif)
+
 A small [LÖVE](https://love2d.org/) (0.10.x) module which automatically uses
 [SpriteBatches](https://love2d.org/wiki/SpriteBatch) when drawing the same image
 multiple times in a row.
