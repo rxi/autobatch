@@ -1,7 +1,7 @@
 --
 -- autobatch.lua
 --
--- Copyright (c) 2016 rxi
+-- Copyright (c) 2018 rxi
 --
 -- This library is free software; you can redistribute it and/or modify it
 -- under the terms of the MIT license. See LICENSE for details.
