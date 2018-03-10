@@ -16,7 +16,7 @@ local love_graphics = love.graphics
 autobatch.threshold = 4
 autobatch.batches = setmetatable( {}, { __mode = "k" } )
 autobatch.pending = { image = nil, draws = 0 }
-autobatch.color = { 255, 255, 255 }
+autobatch.color = { 255, 255, 255, 255 }
 autobatch.image = nil
 
 
