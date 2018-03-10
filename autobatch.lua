@@ -18,6 +18,7 @@ autobatch.batches = setmetatable( {}, { __mode = "k" } )
 autobatch.pending = { image = nil, draws = 0 }
 autobatch.color = { 255, 255, 255, 255 }
 autobatch.image = nil
+autobatch.stack = {}
 
 
 local function switchActiveImage(img)
@@ -134,6 +135,26 @@ function autobatch.reset()
 end
 
 
+function autobatch.push(stack)
+  if stack == "all" then
+    table.insert(autobatch.stack, { autobatch.getColor() })
+  else
+    table.insert(autobatch.stack, false)
+  end
+  love_graphics.push(stack)
+end
+
+
+function autobatch.pop()
+  autobatch.flush()
+  love_graphics.pop()
+  local color = table.remove(autobatch.stack)
+  if color ~= false then
+    autobatch.setColor(color)
+  end
+end
+
+
 function autobatch.flush()
   -- If we have an active image set switch from it to draw the active batch and
   -- reset love's color to match our internal one
@@ -153,7 +174,7 @@ end
 
 -- Initialise wrapper functions for all graphics functions which change the
 -- state or draw to the screen, thus requiring that the autobatch be flushed
--- prior. reset() and setColor() are special cases handled above
+-- prior. reset(), push(), pop() and setColor() are special cases handled above
 local names = {
   "arc",
   "circle",
@@ -176,8 +197,6 @@ local names = {
   "setShader",
   "setStencilTest",
   "origin",
-  "pop",
-  "push",
   "rotate",
   "scale",
   "shear",
