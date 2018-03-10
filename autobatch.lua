@@ -69,14 +69,12 @@ function autobatch.draw(image, ...)
       -- draw count threshold; if so we can switch to it as the active image and
       -- create a batch for it, otherwise we just increment the count and draw
       -- it normally
-      if image == autobatch.pending.image then
-        autobatch.pending.draws = autobatch.pending.draws + 1
-        if autobatch.pending.draws < autobatch.threshold then
-          return flushAndDraw(image, ...)
-        end
-      else
+      if image ~= autobatch.pending.image then
         autobatch.pending.image = image
-        autobatch.pending.draws = 1
+        autobatch.pending.draws = 0
+      end
+      autobatch.pending.draws = autobatch.pending.draws + 1
+      if autobatch.pending.draws < autobatch.threshold then
         return flushAndDraw(image, ...)
       end
     end
@@ -174,7 +172,8 @@ end
 
 -- Initialise wrapper functions for all graphics functions which change the
 -- state or draw to the screen, thus requiring that the autobatch be flushed
--- prior. reset(), push(), pop() and setColor() are special cases handled above
+-- prior. draw(), getColor(), pop(), push(), reset(), and setColor() are
+-- special cases handled above.
 local names = {
   "arc",
   "circle",
