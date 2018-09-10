@@ -88,7 +88,10 @@ function autobatch.draw(image, ...)
   -- Increase spritebatch capacity if we've reached it
   if b.count == b.capacity then
     b.capacity = b.capacity * 2
-    b.sb:setBufferSize(b.capacity)
+    -- Provides compatibility LOVE 11.0
+    if b.sb.setBufferSize then
+      b.sb:setBufferSize(b.capacity)
+    end
   end
   -- Add to spritebatch
   b.sb:add(...)
